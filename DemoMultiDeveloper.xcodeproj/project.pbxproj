@@ -170,6 +170,7 @@
 				C34D426D17721A9F00B6A350 /* Sources */,
 				C34D426E17721A9F00B6A350 /* Frameworks */,
 				C34D426F17721A9F00B6A350 /* Resources */,
+				C34D42AF17721DA700B6A350 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -263,6 +264,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		C34D42AF17721DA700B6A350 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# ---------------------------- IMPORTANT ----------------------------\n# You must set RESTServer to something like 'Set by build script' in the file\n# file '<Project Name>-Info.plist' in the 'Supporting Files' group\n# -------------------------------------------------------------------\n#\n# determin server based on user name\n#\n\nSERVER=${REST_Server}\n\n# Only use developer servers for debug never for release\nif [ \"$CONFIGURATION\" != \"Debug\" ] ; then\n    exit\nfi\n\nif [ \"$USER\" == \"gdunham\" ] ; then\n    SERVER=\"gld.nextbigthing.com\"\nfi\n\nif [ \"$USER\" == \"jashmun\" ] ; then\n    SERVER=\"jda.nextbigthing.com\"\nfi\n\necho $SERVER\n\n#\n# Set the server info in plist file in the build product not the source tree\n#\n/usr/libexec/PlistBuddy -c \"Set :RESTServer $SERVER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -386,6 +400,7 @@
 				GCC_PREFIX_HEADER = "DemoMultiDeveloper/DemoMultiDeveloper-Prefix.pch";
 				INFOPLIST_FILE = "DemoMultiDeveloper/DemoMultiDeveloper-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REST_Server = dev.nextbigthing.com;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -397,6 +412,7 @@
 				GCC_PREFIX_HEADER = "DemoMultiDeveloper/DemoMultiDeveloper-Prefix.pch";
 				INFOPLIST_FILE = "DemoMultiDeveloper/DemoMultiDeveloper-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REST_Server = nextbigthing.com;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -10,4 +10,6 @@
 
 @interface DDSViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *serverNameLable;
+
 @end
